@@ -762,19 +762,6 @@ class ColdWarmDimmer(Dimmer):
         return self.setValue(key="LEVEL", channel=self._temp_channel, value=color_temp)
 
 
-class LedDevice(HMActor, HelperLedDevice):
-    """ HM-OU-LED16 """
-
-    def __init__(self):
-        super(LedDevice, self).__init__()
-
-        self.WRITENODE.update({"LED_STATUS": self.ELEMENT})
-
-    @property
-    def ELEMENT(self):
-        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
-
-
 DEVICETYPES = {
     "HM-LC-Bl1-SM": Blind,
     "HM-LC-Bl1-SM-2": Blind,
@@ -926,5 +913,4 @@ DEVICETYPES = {
     "HmIP-MIOB": IPMultiIO,
     "HM-DW-WM": Dimmer,
     "HM-LC-DW-WM": ColdWarmDimmer,
-    "HM-OU-LED16": LedDevice,
 }

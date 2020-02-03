@@ -82,6 +82,11 @@ class RemotePressBattery(HMEvent, HelperEventPress, HelperActionPress, HelperLow
     def ELEMENT(self):
         return [1, 2, 3]
 
+class LedDevice(HMEvent, HelperEventRemote, HelperActionPress, HelperRssiPeer, HelperLedDevice):
+
+    @property
+    def ELEMENT(self):
+        return list(range(1,17))
 
 DEVICETYPES = {
     "HM-RCV-50": RemoteVirtual,
@@ -130,7 +135,7 @@ DEVICETYPES = {
     "ZEL STG RM FST UP4": Remote,
     "263 145": Remote,
     "263 135": Remote,
-    "HM-OU-LED16": Remote,
+    "HM-OU-LED16": LedDevice,
     "HM-PB-4Dis-WM": Remote,
     "HM-PB-4Dis-WM-2": Remote,
     "HMW-IO-4-FM": Remote,

@@ -306,25 +306,3 @@ class HelperLedDevice(HMDevice):
         except Exception as err:
             LOG.debug("LedDevice.set_led_status: Exception %s" % (err,))
             return False
-
-    @property
-    def STATUS(self):
-        """Return status"""
-        return self.getAttributeData("LED_STATUS")
-
-    @STATUS.setter
-    def STATUS(self, setstatus):
-        """Sets a led status"""
-        status = None
-        if setstatus == self.OFF:
-            status = self.OFF
-        elif setstatus == self.RED:
-            status = self.RED
-        elif setstatus == self.GREEN:
-            status = self.GREEN
-        elif setstatus == self.ORANGE:
-            status = self.ORANGE
-        else:
-            LOG.warning("LedDevice.set_status: Invalid status: %s" % str(setstatus))
-        if status:
-            self.actionNodeData("LED_STATUS", status)
