@@ -37,6 +37,7 @@ class Blind(GenericBlind, HelperWorking, HelperRssiPeer):
     """
     Blind switch that raises and lowers roller shutters or window blinds.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -48,6 +49,7 @@ class IPBlind(GenericBlind, HelperRssiPeer):
     """
     Blind switch that raises and lowers roller shutters or window blinds.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -63,6 +65,7 @@ class KeyBlind(Blind, HelperActionPress, HelperWired):
     """
     Blind switch that raises and lowers roller shutters or window blinds.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -115,9 +118,10 @@ class Dimmer(GenericDimmer, HelperWorking):
     """
     Dimmer switch that controls level of light brightness.
     """
+
     @property
     def ELEMENT(self):
-        if "Dim2L" in self._TYPE or "Dim2T" in self._TYPE  or self._TYPE == "HM-DW-WM" or self._TYPE == "HM-LC-DW-WM":
+        if "Dim2L" in self._TYPE or "Dim2T" in self._TYPE or self._TYPE == "HM-DW-WM" or self._TYPE == "HM-LC-DW-WM":
             return [1, 2]
         return [1]
 
@@ -126,6 +130,7 @@ class KeyDimmer(GenericDimmer, HelperWorking, HelperActionPress):
     """
     Dimmer switch that controls level of light brightness.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -142,6 +147,7 @@ class IPDimmer(GenericDimmer):
     """
     IP Dimmer switch that controls level of light brightness.
     """
+
     @property
     def ELEMENT(self):
         if "PDT" in self._TYPE:
@@ -153,6 +159,7 @@ class IPKeyDimmer(GenericDimmer, HelperWorking, HelperActionPress):
     """
     IP Dimmer with buttons switch that controls level of light brightness.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -189,6 +196,7 @@ class GenericSwitch(HMActor, HelperActorState):
 
 class Rain(GenericSwitch, HelperWorking):
     """Rain / Heat sensor with heating switch"""
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
         # init metadata
@@ -207,6 +215,7 @@ class Switch(GenericSwitch, HelperWorking, HelperRssiPeer):
     """
     Switch turning plugged in device on or off.
     """
+
     @property
     def ELEMENT(self):
         if "LC-Sw2" in self.TYPE or "Sec-SFA-SM" in self.TYPE:
@@ -252,6 +261,7 @@ class HMWIOSwitch(GenericSwitch, HelperWired):
     """
     Wired IO module controlling and sensing attached devices.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         # Output channels (digital)
         self._doc = [1, 2, 3, 4, 5, 6]
@@ -311,6 +321,7 @@ class RFSiren(GenericSwitch, HelperWorking, HelperRssiPeer):
     """
     HM-Sec-Sir-WM Siren
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -329,6 +340,7 @@ class KeyMatic(HMActor, HelperActorState, HelperRssiPeer):
     """
     Lock, Unlock or Open KeyMatic.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -388,6 +400,7 @@ class IPKeySwitch(IPSwitch, HMEvent, HelperActionPress):
     """
     Switch turning plugged in device on or off and measuring energy consumption.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -403,6 +416,7 @@ class IPKeySwitchLevel(GenericDimmer, GenericSwitch, HMEvent, HelperActionPress,
     """
     Switch with two independent controllable LEDs, turning plugged in device on or off.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -437,22 +451,22 @@ class IPKeySwitchLevel(GenericDimmer, GenericSwitch, HMEvent, HelperActionPress,
         # Get the color from homematic. This is one of the predefined colors, that need to be converted to h/s value
         hm_color = self.getCachedOrUpdatedValue("COLOR", channel)
 
-        if hm_color == 7: #WHITE
+        if hm_color == 7:  # WHITE
             return 0, 0
-        elif hm_color == 6: #YELLOW
-            return 60/360, 1
-        elif hm_color == 2: #GREEN
-            return 120/360, 1
-        elif hm_color == 3: #TURQUOISE / CYAN
-            return 180/360, 1
-        elif hm_color == 1: #BLUE
-            return 240/360, 1
-        elif hm_color == 5: #PURPLE
-            return 300/360, 1
-        elif hm_color == 4: #RED
+        elif hm_color == 6:  # YELLOW
+            return 60 / 360, 1
+        elif hm_color == 2:  # GREEN
+            return 120 / 360, 1
+        elif hm_color == 3:  # TURQUOISE / CYAN
+            return 180 / 360, 1
+        elif hm_color == 1:  # BLUE
+            return 240 / 360, 1
+        elif hm_color == 5:  # PURPLE
+            return 300 / 360, 1
+        elif hm_color == 4:  # RED
             return 0, 1
         else:
-            return 1, 1  #No way to specify "black", so just pick a different shade of red
+            return 1, 1  # No way to specify "black", so just pick a different shade of red
 
     def set_hs_color(self, hue: float, saturation: float, channel=None):
         """
@@ -478,16 +492,15 @@ class IPKeySwitchLevel(GenericDimmer, GenericSwitch, HMEvent, HelperActionPress,
         elif hue in range(90, 149):
             hm_color = 'GREEN'
         elif hue in range(150, 209):
-            hm_color = 'TURQUOISE' # actually cyan
+            hm_color = 'TURQUOISE'  # actually cyan
         elif hue in range(210, 269):
             hm_color = 'BLUE'
         elif hue in range(270, 329):
-            hm_color = 'PURPLE' # actually magenta
+            hm_color = 'PURPLE'  # actually magenta
         else:
             hm_color = 'RED'
 
         self.setValue(key="COLOR", value=hm_color, channel=channel)
-
 
     @property
     def ELEMENT(self):
@@ -498,6 +511,7 @@ class SwitchPowermeter(Switch, HelperActionOnTime, HMSensor):
     """
     Switch turning plugged in device on or off and measuring energy consumption.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -517,6 +531,7 @@ class EcoLogic(Switch, HelperActionOnTime, HelperActionPress, HMSensor):
     """
     Switching device and humidity sensor for automatic watering
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -533,6 +548,7 @@ class IPSwitchPowermeter(IPSwitch, HMSensor, HelperRssiDevice):
     """
     Switch turning plugged in device on or off and measuring energy consumption.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -560,6 +576,7 @@ class IPKeySwitchPowermeter(IPSwitchPowermeter, HMEvent, HelperActionPress):
     """
     Switch turning plugged in device on or off and measuring energy consumption.
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -571,6 +588,7 @@ class IPGarage(GenericSwitch, HMSensor):
     """
     HmIP-MOD-HO and HmIP-MOD-TM Garage actor
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -602,6 +620,7 @@ class IPMultiIO(IPSwitch):
     """
     HmIP-MIOB Multi IO Box
     """
+
     def __init__(self, device_description, proxy, resolveparamsets=False):
         super().__init__(device_description, proxy, resolveparamsets)
 
@@ -652,7 +671,7 @@ class ColorEffectLight(Dimmer):
             return 0, 0
 
         # For all other colors we assume saturation of 1
-        return hm_color/200, 1
+        return hm_color / 200, 1
 
     # pylint: disable=unused-argument
     def set_hs_color(self, hue: float, saturation: float, channel=None):
@@ -706,6 +725,7 @@ class ColorEffectLight(Dimmer):
     def turn_off_effect(self):
         return self.set_effect(self._light_effect_list[0])
 
+
 class ColdWarmDimmer(Dimmer):
     """
     Dimmer with controls for Cold and Warm LEDs.
@@ -740,6 +760,20 @@ class ColdWarmDimmer(Dimmer):
         color_temp = min(1.0, color_temp)
 
         return self.setValue(key="LEVEL", channel=self._temp_channel, value=color_temp)
+
+
+class LedDevice(HMActor, HelperLedDevice):
+    """ HM-OU-LED16 """
+
+    def __init__(self):
+        super(LedDevice, self).__init__()
+
+        self.WRITENODE.update({"LED_STATUS": self.ELEMENT})
+
+    @property
+    def ELEMENT(self):
+        return [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16]
+
 
 DEVICETYPES = {
     "HM-LC-Bl1-SM": Blind,
@@ -892,4 +926,5 @@ DEVICETYPES = {
     "HmIP-MIOB": IPMultiIO,
     "HM-DW-WM": Dimmer,
     "HM-LC-DW-WM": ColdWarmDimmer,
+    "HM-OU-LED16": LedDevice,
 }

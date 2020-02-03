@@ -279,3 +279,52 @@ class HelperRssiPeer(HMDevice):
 
     def get_rssi(self, channel=0):
         return self.getAttributeData("RSSI_PEER", channel)
+
+class HelperLedDevice(HMDevice):
+    """ Used for devices which do have an LED Output"""
+    def __init__(self, device_description, proxy, resolveparamsets=False):
+        super().__init__(device_description, proxy, resolveparamsets)
+
+        # constants
+        self.OFF = 0
+        self.RED = 1
+        self.GREEN = 2
+        self.ORANGE = 3
+
+        self.led_status = None
+
+    def get_led_status(self):
+        try:
+            return self.getWriteData("LED_STATUS")
+        except Exception as err:
+            LOG.debug("LedDevice.get_led_status: Exception %s" % (err,))
+            return False
+
+    def set_led_status(self, status):
+        try:
+            return self.writeNodeData("LED_STATUS", data=status)
+        except Exception as err:
+            LOG.debug("LedDevice.set_led_status: Exception %s" % (err,))
+            return False
+
+    @property
+    def STATUS(self):
+        """Return status"""
+        return self.getAttributeData("LED_STATUS")
+
+    @STATUS.setter
+    def STATUS(self, setstatus):
+        """Sets a led status"""
+        status = None
+        if setstatus == self.OFF:
+            status = self.OFF
+        elif setstatus == self.RED:
+            status = self.RED
+        elif setstatus == self.GREEN:
+            status = self.GREEN
+        elif setstatus == self.ORANGE:
+            status = self.ORANGE
+        else:
+            LOG.warning("LedDevice.set_status: Invalid status: %s" % str(setstatus))
+        if status:
+            self.actionNodeData("LED_STATUS", status)
