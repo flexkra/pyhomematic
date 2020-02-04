@@ -44,6 +44,9 @@ else:
 proxy = xmlrpc.client.ServerProxy(ccu)
 
 devices = proxy.listDevices()
+with open("noanymn.json", 'w') as f:
+    f.write(json.dumps(devices))
+sys.exit()
 
 for device in devices:
     paramsets = {}
@@ -54,15 +57,15 @@ for device in devices:
             pass
     if 'CHILDREN' in device:
         for i in range(len(device['CHILDREN'])):
-            device['CHILDREN'][i] = device['CHILDREN'][i][-3:]
-    device['ADDRESS'] = device['ADDRESS'][-3:]
+            device['CHILDREN'][i] = device['CHILDREN'][i]
+    device['ADDRESS'] = device['ADDRESS']
     if 'PARENT' in device:
-        device['PARENT'] = device['PARENT'][-3:]
+        device['PARENT'] = device['PARENT']
     r = random.randint(0, 5000)
     if 'PHYSICAL_ADDRESS' in device:
-        device['PHYSICAL_ADDRESS'] = device['PHYSICAL_ADDRESS'] + r
+        device['PHYSICAL_ADDRESS'] = device['PHYSICAL_ADDRESS']
     if 'RF_ADDRESS' in device:
-        device['RF_ADDRESS'] = device['RF_ADDRESS'] + r
+        device['RF_ADDRESS'] = device['RF_ADDRESS']
     device['PARAMSETS'] = paramsets
 
 if not outfile:

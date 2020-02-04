@@ -300,9 +300,9 @@ class HelperLedDevice(HMDevice):
             LOG.debug("LedDevice.get_led_status: Exception %s" % (err,))
             return False
 
-    def set_led_status(self, status):
+    def set_led_status(self, status, channel=None):
         try:
-            return self.writeNodeData("LED_STATUS", data=status)
+            return self.setValue(key="LED_STATUS", value=status, channel=channel)
         except Exception as err:
             LOG.debug("LedDevice.set_led_status: Exception %s" % (err,))
             return False

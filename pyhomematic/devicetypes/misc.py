@@ -2,7 +2,7 @@ import logging
 from pyhomematic.devicetypes.generic import HMDevice
 from pyhomematic.devicetypes.helper import HelperActionPress, \
     HelperEventRemote, HelperEventPress, HelperRssiPeer, HelperLowBatIP, \
-    HelperLowBat
+    HelperLowBat, HelperLedDevice
 
 LOG = logging.getLogger(__name__)
 
@@ -83,6 +83,7 @@ class RemotePressBattery(HMEvent, HelperEventPress, HelperActionPress, HelperLow
         return [1, 2, 3]
 
 class LedDevice(HMEvent, HelperEventRemote, HelperActionPress, HelperRssiPeer, HelperLedDevice):
+    """ HM-OU-LED16 """
 
     @property
     def ELEMENT(self):

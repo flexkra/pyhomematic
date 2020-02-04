@@ -61,7 +61,7 @@ def cli(local, localport, remote, remoteport, address, channel, state, toggle,
 
     sleepcounter = 0
 
-    while not pyhomematic.devices and sleepcounter < 20:
+    while not pyhomematic.devices and sleepcounter < 3:
         print("Waiting for devices")
         sleepcounter += 1
         time.sleep(1)
@@ -70,10 +70,13 @@ def cli(local, localport, remote, remoteport, address, channel, state, toggle,
     # read system variables
     print("******************************")
     print("Read all: %s" % str(pyhomematic.getAllSystemVariables('default')))
+    print("Interface: %s" % str(pyhomematic.listBidcosInterfaces('default')))
     if variable is not None:
         pyhomematic.setSystemVariable(variable, data)
         print("Read: %s" % str(pyhomematic.getSystemVariable(variable)))
     print("******************************")
+
+    sys.exit()
 
     # need test a hm object?
     if address in pyhomematic.devices:
