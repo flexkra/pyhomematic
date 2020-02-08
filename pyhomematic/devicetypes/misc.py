@@ -86,7 +86,7 @@ class LedDevice(Remote, HelperLedDevice):
 
     def ELEMENT(self):
         if "HM-OU-LED16" in self.TYPE:
-            return list(range(1, 16))
+            return list(range(1, 17))
 
 
 DEVICETYPES = {
